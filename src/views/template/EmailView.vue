@@ -56,7 +56,7 @@
       </div>
     </div>
 
-    <div class="flex w-full">
+    <div class="flex w-full justify-between">
       <div id="SideMenu" class="w-[300px]">
         <div
           class="flex items-center justify-center bg-sky-200 w-36 h-8 mt-2 rounded-2xl ml-2 p-7 cursor-pointer"
@@ -102,6 +102,52 @@
       <!-- this is where the page changes -->
       <router-view />
       <!-- this is where the page changes -->
+      <div class="m-4">
+        <div class="w-6 h-6 flex justify-center mb-7">
+          <img class="object-center" src="img/GoogleCalendar.png" />
+        </div>
+        <div class="w-6 h-6 flex justify-center mb-7">
+          <img class="object-center" src="img/GoogleKeep.png" />
+        </div>
+        <div class="w-6 h-6 flex justify-center mb-7">
+          <img class="object-center" src="img/GoogleTasks.png" />
+        </div>
+        <div class="w-6 h-6 flex justify-center mb-7">
+          <img class="object-center" src="img/GoogleContacts.png" />
+        </div>
+
+        <div class="w-6 flex mb-7 border border-gray-300"></div>
+        <div class="w-6 h-6 flex justify-center mb-7">
+          <PlusIcon />
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="absolute bottom-0 right-0 mr-20 rounded-t-lg shadow-2xl bg-white w-[560px] h-[570px]"
+    >
+      <div
+        class="flex items-center justify-between rounded-lg w-full text-sm px-3.5 py-2.5 bg-gray-200"
+      >
+        <div>New Message</div>
+        <CloseIcon />
+      </div>
+      <div class="relative flex items-center px-3.5 py-2">
+        <div class="text-sm text-gray-700">To</div>
+        <input
+          type="text"
+          class="w-full h-6 border-transparent border-none focus:ring-0 outline-none"
+        />
+        <div class="absolute bottom-0 border-b w-[calc(100%-30px)]"></div>
+      </div>
+      <div class="relative flex items-center px-3.5 py-2">
+        <div class="text-sm text-gray-700">Subject</div>
+        <input
+          type="text"
+          class="w-full h-6 border-transparent border-none focus:ring-0 outline-none"
+        />
+        <div class="absolute bottom-0 border-b w-[calc(100%-30px)]"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -115,4 +161,6 @@ import StarOutlineIcon from "vue-material-design-icons/StarOutline.vue";
 import ClockOutlineIcon from "vue-material-design-icons/ClockOutline.vue";
 import SendOutlineIcon from "vue-material-design-icons/SendOutline.vue";
 import FileOutlineIcon from "vue-material-design-icons/FileOutline.vue";
+import PlusIcon from "vue-material-design-icons/Plus.vue";
+import CloseIcon from "vue-material-design-icons/Close.vue";
 </script>
