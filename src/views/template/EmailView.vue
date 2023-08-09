@@ -59,42 +59,55 @@
     <div class="flex w-full justify-between">
       <div id="SideMenu" class="w-[300px]">
         <div
+          @:click="newMessageOpen = !newMessageOpen"
           class="flex items-center justify-center bg-sky-200 w-36 h-8 mt-2 rounded-2xl ml-2 p-7 cursor-pointer"
         >
-          <PencilOutlineIcon size="25" class="mr-3" />
+          <PencilOutlineIcon :size="25" class="mr-3" />
           <span class="text-sm">Compose</span>
         </div>
         <div class="my-5"></div>
+
+        <router-link to="/email">
+          <div
+            class="flex w-[250px] items-center justify-between bg-blue-100 px-6 py-1.5 cursor-pointer rounded-r-full"
+          >
+            <div class="flex items-center">
+              <InboxIcon :size="17" />
+              <div class="text-sm pl-4 font-semibold">Inbox</div>
+            </div>
+            <div class="text-xs pl-4 font-semibold">26</div>
+          </div>
+        </router-link>
+
         <div
-          class="flex w-[250px] items-center justify-between bg-blue-100 px-6 py-1.5 rounded-r-full"
+          class="flex w-[250px] items-center justify-between px-6 py-1.5 cursor-pointer"
         >
           <div class="flex items-center">
-            <InboxIcon size="17" />
-            <div class="text-sm pl-4 font-semibold">Inbox</div>
-          </div>
-          <div class="text-xs pl-4 font-semibold">26</div>
-        </div>
-        <div class="flex w-[250px] items-center justify-between px-6 py-1.5">
-          <div class="flex items-center">
-            <StarOutlineIcon size="17" />
+            <StarOutlineIcon :size="17" />
             <div class="text-sm pl-4">Starred</div>
           </div>
         </div>
-        <div class="flex w-[250px] items-center justify-between px-6 py-1.5">
+        <div
+          class="flex w-[250px] items-center justify-between px-6 py-1.5 cursor-pointer"
+        >
           <div class="flex items-center">
-            <ClockOutlineIcon size="17" />
+            <ClockOutlineIcon :size="17" />
             <div class="text-sm pl-4">Snoozed</div>
           </div>
         </div>
-        <div class="flex w-[250px] items-center justify-between px-6 py-1.5">
+        <div
+          class="flex w-[250px] items-center justify-between px-6 py-1.5 cursor-pointer"
+        >
           <div class="flex items-center">
-            <SendOutlineIcon size="17" />
+            <SendOutlineIcon :size="17" />
             <div class="text-sm pl-4">Sent</div>
           </div>
         </div>
-        <div class="flex w-[250px] items-center justify-between px-6 py-1.5">
+        <div
+          class="flex w-[250px] items-center justify-between px-6 py-1.5 cursor-pointer"
+        >
           <div class="flex items-center">
-            <FileOutlineIcon size="17" />
+            <FileOutlineIcon :size="17" />
             <div class="text-sm pl-4">Draft</div>
           </div>
         </div>
@@ -124,13 +137,18 @@
     </div>
 
     <div
+      v-show="newMessageOpen"
       class="absolute bottom-0 right-0 mr-20 rounded-t-lg shadow-2xl bg-white w-[560px] h-[570px]"
     >
       <div
         class="flex items-center justify-between rounded-lg w-full text-sm px-3.5 py-2.5 bg-gray-200"
       >
         <div>New Message</div>
-        <CloseIcon />
+        <CloseIcon
+          @:click="newMessageOpen = false"
+          class="cursor-pointer"
+          :size="19"
+        />
       </div>
       <div class="relative flex items-center px-3.5 py-2">
         <div class="text-sm text-gray-700">To</div>
@@ -148,6 +166,20 @@
         />
         <div class="absolute bottom-0 border-b w-[calc(100%-30px)]"></div>
       </div>
+      <div class="m-3">
+        <textarea
+          style="resize: none"
+          rows="14"
+          class="w-full border-transparent border-none focus:ring-0 outline-none"
+        ></textarea>
+      </div>
+      <div class="p-4 mt-5">
+        <button
+          class="bg-blue-700 hover:bg-blue-600 text-white text-sm font-bold py-2 px-4 rounded-full"
+        >
+          Send message
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -163,4 +195,7 @@ import SendOutlineIcon from "vue-material-design-icons/SendOutline.vue";
 import FileOutlineIcon from "vue-material-design-icons/FileOutline.vue";
 import PlusIcon from "vue-material-design-icons/Plus.vue";
 import CloseIcon from "vue-material-design-icons/Close.vue";
+import { ref } from "vue";
+
+let newMessageOpen = ref(false);
 </script>
