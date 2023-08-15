@@ -1,20 +1,22 @@
 <template>
   <div id="MessageRow">
     <div
+      :class="hasViewed ? 'bg-gray-100' : ''"
       class="border-b hover:border-gray-200 hover:border-t hover:border-y-2 hover:border-x cursor-pointer"
     >
       <div class="flex items-center px-4 py-2">
         <div class="flex items-center">
           <component
-            :is="CheckboxBlankOutlineIcon"
+            @click="isSelected = !isSelected"
+            :is="isSelected ? CheckboxOutlineIcon : CheckboxBlankOutlineIcon"
             :size="19"
-            fillColor="#636363"
+            :fillColor="isSelected ? 'blue' : '#636363'"
           />
           <StarOutlineIcon :size="19" fillColor="#636363" class="ml-4" />
         </div>
 
         <div class="flex items-center w-full">
-          <router-link to="email/message" class="w-full">
+          <router-link :to="`email/message/${id}`" class="w-full">
             <div class="flex items-center justify-between">
               <div class="flex items-center w-full">
                 <div class="text-sm ml-4 font-semibold truncate-from">
@@ -46,24 +48,28 @@
 </template>
 
 <script setup>
-import { defineProps, toRefs } from "vue";
+import { defineProps, ref, toRefs, watch, defineEmits } from "vue";
 import CheckboxBlankOutlineIcon from "vue-material-design-icons/CheckboxBlankOutline.vue";
+import CheckboxOutlineIcon from "vue-material-design-icons/CheckboxOutline.vue";
 import StarOutlineIcon from "vue-material-design-icons/StarOutline.vue";
 
+const emit = defineEmits(["selectedId"]);
+
 const props = defineProps({
+  id: String,
   from: String,
   subject: String,
   body: String,
   time: String,
+  hasViewed: Boolean,
 });
 
-const { from, subject, body, time } = toRefs(props);
+let isSelected = ref(false);
+const { from, subject, body, time, id, hasViewed } = toRefs(props);
 
-// let icon = null;
-// console.log(iconString);
-// if (iconString.value === "menu") {
-//   icon = MenuIcon;
-// }
+watch(isSelected, (bool) => {
+  emit("selectedId", { id: id.value, bool: bool });
+});
 </script>
 
 <style lang="scss">

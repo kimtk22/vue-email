@@ -3,14 +3,21 @@ import HomeView from "../views/HomeView.vue";
 import EmailView from "../views/template/EmailView.vue";
 import MessageView from "../views/MessageView.vue";
 import LoginView from "../views/LoginView.vue";
+import { useUserStore } from "@/store/userStore";
 
 const routes = [
   {
     path: "/",
+    beforeEnter: (to, from, next) => {
+      useUserStore().email ? next("/email") : next();
+    },
     component: LoginView,
   },
   {
     path: "/email",
+    beforeEnter: (to, from, next) => {
+      useUserStore().email ? next() : next("/");
+    },
     component: EmailView,
     children: [
       {
@@ -18,7 +25,7 @@ const routes = [
         component: HomeView,
       },
       {
-        path: "message",
+        path: "message/:id",
         component: MessageView,
       },
     ],

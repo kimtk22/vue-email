@@ -3,6 +3,7 @@
     <div class="border-b">
       <div class="flex items-center justify-between px-4 my-3">
         <IconComponent
+          @click="deleteEmails"
           class="-m-2 -ml-2.5"
           iconString="trash"
           iconColor="#636363"
@@ -14,47 +15,46 @@
       </div>
     </div>
     <MessageRow
-      from="vodjaos@gmail.com"
-      subject="Test row 1"
-      body="this is the body text"
-      time="Jun 20 15:15"
+      v-for="email in userStore.emails"
+      :id="email.id"
+      :key="email"
+      :from="`${email.firstName} ${email.lastName}`"
+      :subject="email.subject"
+      :body="email.body"
+      :hasViewed="email.hasViewed"
+      :time="email.createAt"
+      @selectedId="selectedId"
     />
-    <MessageRow
-      from="vodjaos@gmail.com"
-      subject="Test row 1"
-      body="this is the body text"
-      time="Jun 20 15:15"
-    />
-    <MessageRow
-      from="vodjaos@gmail.com"
-      subject="Test row 1"
-      body="this is the body text"
-      time="Jun 20 15:15"
-    />
-    <MessageRow
-      from="vodjaos@gmail.com"
-      subject="Test row 1"
-      body="this is the body text"
-      time="Jun 20 15:15"
-    />
-    <MessageRow
-      from="vodjaos@gmail.com"
-      subject="Test row 1"
-      body="this is the body text"
-      time="Jun 20 15:15"
-    />
-    <MessageRow
-      from="vodjaos@gmail.com"
-      subject="Test row 1"
-      body="this is the body text"
-      time="Jun 20 15:15"
-    />
-
-    <div></div>
   </div>
 </template>
 
 <script setup>
 import IconComponent from "@/components/IconComponent.vue";
 import MessageRow from "@/components/MessageRow.vue";
+import { useUserStore } from "@/store/userStore";
+import { onMounted } from "vue";
+
+const selectedEmailIds = new Set();
+const userStore = useUserStore();
+
+onMounted(() => {
+  userStore.getEmailsByEmailAddress();
+});
+
+const selectedId = (event) => {
+  if (event.bool) {
+    selectedEmailIds.add(event.id);
+  } else {
+    selectedEmailIds.delete(event.id);
+  }
+};
+
+const deleteEmails = () => {
+  const result = confirm("선택된 메일을 삭제하시겠습니까?");
+  if (result) {
+    selectedEmailIds.forEach((id) => {
+      userStore.deleteEmail(id);
+    });
+  }
+};
 </script>
